@@ -1,0 +1,42 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.title {
+    text-align: left;
+    font-size: 20px;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.list {
+    margin: 0;
+    padding-left: 30px;
+}
+
+.list_item {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.delete_btn {
+    margin-left: 20px;
+    padding: 2px 3px;
+    width: 50px;
+    border-radius: 5px;
+    border: 1px solid rgb(181, 178, 178);
+    color: black;
+    background-color: white;
+    font-size: 10px;
+}
+
+.delete_btn:hover,
+.delete_btn:active {
+    color: white;
+    background-color: blue;
+    border: blue;
+}
+

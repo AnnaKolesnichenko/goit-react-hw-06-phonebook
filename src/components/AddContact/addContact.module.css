@@ -1,0 +1,46 @@
+.main {
+    margin-left: 30px;
+}
+
+.main_title {
+    text-align: left;
+    font-size: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form label {
+    margin-left: 0;
+    width: 150px;
+}
+
+.name_input {
+    margin-bottom: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+
+.name_input:active,
+.name_input:focus {
+    border: 1px  rgb(167, 167, 229);
+}
+
+.add_btn {
+    width: 100px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+    color: rgb(50, 47, 47);
+    box-shadow: 1px 1px 7px rgba(0, 0, 0, .5);
+}
+
+.add_btn:hover,
+.add_btn:active {
+    background-color: blue;
+    color: white;
+}
