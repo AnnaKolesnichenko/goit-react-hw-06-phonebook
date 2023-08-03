@@ -5,26 +5,12 @@ import Filter from 'components/Filter/Filter';
 
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { useDispatch } from 'react-redux';
-import {
-  SET_DELETE,
-  SET_CONTACT,
-  SET_FILTER,
-  ADD_CONTACTS_FROM_STORAGE,
-} from 'redux/actionTypes';
 
 import './App.css';
 import { nanoid } from 'nanoid';
+import { setContact, setDelete, setFilter, setFromStorage } from 'redux/contactsReducer';
 
 const App = () => {
-  // const contactList = [
-  //     {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-  //     {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-  //     {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-  //     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-  //   ];
-
-  // const [contacts, setContacts] = useState(contactList);
-  // const [filter, setFilter] = useState('');
 
   const contacts = useSelector(state => {
     console.log('state', state);
@@ -52,8 +38,8 @@ const App = () => {
       ...data,
       id: nanoid(),
     };
-    dispatch({ type: SET_CONTACT, payload: newContact });
-    // setContacts(prevContacts => [newContact, ...prevContacts]);
+    dispatch(setContact(newContact));
+    // dispatch({ type: SET_CONTACT, payload: newContact });
   };
 
   useEffect(() => {
@@ -61,12 +47,11 @@ const App = () => {
 
     if (stored) {
       const contactsFromStorage = JSON.parse(stored);
-      dispatch({
-        type: ADD_CONTACTS_FROM_STORAGE,
-        payload: contactsFromStorage,
-      });
-      // dispatch({ type: 'contact/addContact', payload: JSON.parse(stored) });
-      // setContacts(JSON.parse(stored));
+      dispatch(setFromStorage(contactsFromStorage));
+      // dispatch({
+      //   type: ADD_CONTACTS_FROM_STORAGE,
+      //   payload: contactsFromStorage,
+      // });
     }
   }, [dispatch]);
 
@@ -78,27 +63,23 @@ const App = () => {
 
   //filter by term
   const onGetFilterData = e => {
-    dispatch({ type: SET_FILTER, payload: e.target.value });
-    // setFilter(e.target.value);
+    dispatch(setFilter(e.target.value));
+    // dispatch({ type: SET_FILTER, payload: e.target.value });
   };
 
   //deleting data
   const onDeleteContact = contactId => {
-    dispatch({ type: SET_DELETE, payload: contactId });
-    // setContacts(
-    //   contacts => contacts.filter(contact => contact.id !== contactId)
-    // );
+    dispatch(setDelete(contactId));
+    // dispatch({ type: SET_DELETE, payload: contactId });
   };
 
   const getFilteredContacts = contacts => {
-    // const {contacts, filter} = this.state;
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
 
   //render
-  // const {contacts, name, number, filter} = this.state;
   const filteredNames = getFilteredContacts(contacts);
 
   return (

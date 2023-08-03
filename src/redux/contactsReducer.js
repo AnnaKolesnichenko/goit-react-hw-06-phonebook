@@ -1,9 +1,4 @@
-import {
-  SET_CONTACT,
-  SET_DELETE,
-  SET_FILTER,
-  ADD_CONTACTS_FROM_STORAGE,
-} from './actionTypes';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   contacts: [
@@ -15,38 +10,63 @@ const initialState = {
   filter: '',
 };
 
-export const contactDetailsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_CONTACT: {
-      return {
-        ...state,
-        contacts: [action.payload, ...state.contacts],
-      };
+const contactsSlice = createSlice({
+    name: 'contacts',
+    initialState: initialState,
+    reducers: {
+        setContact: (state, action) => {
+            state.contacts = [action.payload, ...state.contacts];
+        },
+        setDelete: (state, action) => {
+            state.contacts = state.contacts.filter(
+            contact => contact.id !== action.payload
+            );
+        },
+        setFilter: (state, action) => {
+            state.filter = action.payload
+        }, 
+        setFromStorage: (state, action) => {
+            state.contacts = action.payload
+        }
     }
-    case SET_FILTER: {
-      return {
-        ...state,
-        filter: action.payload,
-      };
-    }
-    case SET_DELETE: {
-      return {
-        ...state,
-        contacts: state.contacts.filter(
-          contact => contact.id !== action.payload
-        ),
-      };
-    }
-    case ADD_CONTACTS_FROM_STORAGE: {
-      return {
-        ...state,
-        contacts: action.payload,
-      };
-    }
-    default:
-      return state;
-  }
-};
+});
+
+export const {setContact, setDelete, setFilter, setFromStorage} = contactsSlice.actions;
+export const contactDetailsReducer = contactsSlice.reducer;
+
+
+// export const contactDetailsReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case SET_CONTACT: {
+//       return {
+//         ...state,
+//         contacts: [action.payload, ...state.contacts],
+//       };
+//     }
+//     case SET_FILTER: {
+//       return {
+//         ...state,
+//         filter: action.payload,
+//       };
+//     }
+//     case SET_DELETE: {
+//       return {
+//         ...state,
+//         contacts: state.contacts.filter(
+//           contact => contact.id !== action.payload
+//         ),
+//       };
+//     }
+//     case ADD_CONTACTS_FROM_STORAGE: {
+//       return {
+//         ...state,
+//         contacts: action.payload,
+//       };
+//     }
+//     default:
+//       return state;
+//   }
+// };
 
 // export const setContact = (payload) => {
 //     return {
