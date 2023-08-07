@@ -1,22 +1,21 @@
 import { useState } from 'react';
 import css from './addContact.module.css';
-import PropTypes from 'prop-types';
+import { nanoid } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import { setContact } from 'redux/contactsReducer';
+import { contactState } from 'redux/selectors';
 
-const AddContact = (props) => {
+const AddContact = () => {
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
-
-    // state = {
-    //     name: '',
-    //     number: ''
-    // };
+    const contacts = useSelector(contactState);
+    const dispatch = useDispatch();
 
     const handleFormNameChange = (e) => {
         setName(
             e.target.value ,
         );
     };
-
     const handleFormNumberChange = (e) => {
         setNumber(
             e.target.value ,
@@ -26,7 +25,22 @@ const AddContact = (props) => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         
-        props.onFormSubmit({ name, number });
+        const duplicateName = contacts.some(
+            contact => contact.name.toLowerCase() === name.toLowerCase()
+        );
+    
+        if (duplicateName) {
+            alert('already there!!');
+            return;
+        }
+    
+        const newContact = {
+            name, 
+            number,
+            id: nanoid(),
+        };
+        dispatch(setContact(newContact));
+
         resetForm();
     };
 
@@ -38,7 +52,6 @@ const AddContact = (props) => {
 
         return (
             <div className={css.main}>
-                {/* <h1 className={css.main_title}>Name</h1> */}
                 <form className={css.form} onSubmit={handleFormSubmit}>
                     <label htmlFor=''>
                     <h1 className={css.main_title}>Name</h1>
@@ -73,10 +86,5 @@ const AddContact = (props) => {
         )
     }
 
-
-AddContact.propTypes = {
-
-    onFormSubmit: PropTypes.func.isRequired
-}
 
 export default AddContact;

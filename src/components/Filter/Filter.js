@@ -1,7 +1,16 @@
 import css from './filter.module.css';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilter } from 'redux/contactsReducer';
+import { filterState } from 'redux/selectors';
 
-const Filter = ({filter, onGetFilterData}) => {
+const Filter = () => {
+    const filter = useSelector(filterState);
+    const dispatch = useDispatch();
+
+    const onGetFilterData = e => {
+        dispatch(setFilter(e.target.value));
+    };
 
     return (
         <div className={css.container}>                
